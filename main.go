@@ -43,7 +43,7 @@ func run() (s *http.Server) {
 
 	go func() {
 		if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("listen: %s\n", err)
+			log.Fatalf("error listening on port: %s\n", err)
 		}
 	}()
 
@@ -58,7 +58,7 @@ func main() {
 	// kill -9 is syscall.SIGKILL but can't be catch, so don't need add it
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
-	log.Println("Shutting down server...")
+	log.Println("shutting down server...")
 
 	// The context is used to inform the server it has 5 seconds to finish
 	// the request it is currently handling
@@ -67,7 +67,7 @@ func main() {
 		cancel()
 	}()
 	if err := s.Shutdown(ctx); err != nil {
-		log.Fatal("Server forced to shutdown")
+		log.Fatal("server forced to shut down")
 	}
-	log.Println("Server exiting")
+	log.Println("server exiting")
 }

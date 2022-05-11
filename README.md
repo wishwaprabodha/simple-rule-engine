@@ -1,6 +1,6 @@
 # Honest Backend Engineer Technical Assessment
 
-> 
+>
 > 🤓 This repository contains a technical assessment to be used by candidates for the Backend Engineer position at Honest.
 >
 
@@ -40,18 +40,18 @@ a POST request and must handle errors gracefully.
 1. Implement a `POST` HTTP endpoint that:
 
    * Receives [a request with JSON body](#request-body).
-   
-   * Runs through the [Decision Engine Rules](#decision-rules).
-   
-   * Returns [a response with JSON body](#response-body):
-   
-     * status = `approved` if all rules are passed.
-     
-     * status = `declined` if any rules are failed.
-     
-3. Handle errors gracefully, without stopping the process and server.
 
-### Specification
+   * Runs through the [Decision Engine Rules](#decision-rules).
+
+   * Returns [a response with JSON body](#response-body):
+
+     * status = `approved` if all rules are passed.
+
+     * status = `declined` if any rules are failed.
+
+1. Handle errors gracefully, without stopping the process.
+
+### Specifications
 
 #### Request Body
 
@@ -64,7 +64,7 @@ a POST request and must handle errors gracefully.
 | job_industry_code        | string      |
 | phone_number             | string      |
 
-#### Example
+##### Example
 
 ```json
 {
@@ -83,9 +83,9 @@ a POST request and must handle errors gracefully.
 | -----------              | ----------- |
 | status                   | string      |
 
-#### Example
+##### Example
 
-##### Approved:
+###### Approved:
 
 ```json
 {
@@ -93,7 +93,7 @@ a POST request and must handle errors gracefully.
 }
 ```
 
-##### Declined:
+###### Declined:
 
 ```json
 {
@@ -101,27 +101,35 @@ a POST request and must handle errors gracefully.
 }
 ```
 
-
 #### Decision Rules
-The application is approved if it meets these rules.
-1. The applicant must earn more than 100000.
-2. The applicant must be at least 18 years old.
-3. The applicant must not hold more than 3 credit cards, and their `credit_risk_score` must be `LOW`.
-4. The applicant must not involve in any political activities.
-5. The applicant's phone number must be in the area that is valid to apply for this product. The area code is the first digit of phone number. The active area code are `0`, `2`, `5` and `8`.
-6. A pre-approved list of phone numbers are to be auto approved without going through all the above rules. One should be able to update the lists on runtime without needing to restart the server.
 
-`credit_risk_score`, `aml_score` can be retrieved by calling the existing functions in `risk` module.
+The application is approved if it evaluates as `true` on the following rules:
+
+1. The applicant must earn more than 100000.
+1. The applicant must be at least 18 years old.
+1. The applicant must not hold more than 3 credit cards and their `credit_risk_score` must be `LOW`.
+1. The applicant must not be involved in any political activities (must not be a Politically Exposed Person or PEP).
+1. The applicant's phone number must be in an area that is allowed to apply for this product. The area code is denoted by first digit of phone number. The allowed area codes are `0`, `2`, `5`, and `8`.
+1. A pre-approved list of phone numbers should cause the application to be automatically approved without evaluation of the above rules. This list must be able to be updated at runtime without needing to restart the process.
+
+#### External Data Sources
+
+Values for the `credit_risk_score` and `aml_score` fields can be retrieved by calling the existing functions in the provided `risk` module.
 
 ## Evaluation Criteria
 
 1. Problem Understanding
-2. Problem Solving
-3. Testing
-4. Effective Architecture/Design
+1. Problem Solving
+1. Testing
+1. Effective Architecture/Design
 
 ## Submission Instructions
 
-- Create a new branch and add commits in this branch.
-- Once the assignment is completed, run: `git format-patch main`
-- The above command will produce some `.patch` files, simply zip them up, and send the zip file to us.
+* Create a new branch, check it out and add commits to that branch.
+* Once you're done with the assessment create a patch onto `main` - to do this, run the following command:
+
+  ```shell
+  > git format-patch main
+  ```
+
+* The above command will produce some `.patch` files, simply archive them (ZIP, RAR, tarballs are all accepted).
