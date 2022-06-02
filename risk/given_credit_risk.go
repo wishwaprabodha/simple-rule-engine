@@ -13,13 +13,3 @@ func CalculateCreditRisk(age, numberOfCreditCard int) string {
 	}
 	return "HIGH"
 }
-
-func CalculateAMLScore(jobIndustryCode string) (int, error) {
-	jobIndustryPrefix := jobIndustryCode[0:1]
-	jobIndustryValue, err := strconv.Atoi(jobIndustryPrefix)
-	if err != nil {
-		return 999999, err
-	}
-
-	return jobIndustryValue * 100, nil
-}

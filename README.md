@@ -114,7 +114,7 @@ The application is approved if it evaluates as `true` on the following rules:
 
 #### External Data Sources
 
-Values for the `credit_risk_score` and `aml_score` fields can be retrieved by calling the existing functions in the provided `risk` module.
+Values for the `credit_risk_score` field can be retrieved by calling the existing functions in the provided `risk` module.
 
 ## Evaluation Criteria
 
