@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/honestbank/tech-assignment-backend-engineer/config"
 	"log"
 	"net/http"
 	"os"
@@ -12,7 +13,7 @@ import (
 
 	env "github.com/joho/godotenv"
 
-	"github.com/honestbank/tech_assignment_fullstack_engineer/controllers"
+	"github.com/honestbank/tech-assignment-backend-engineer/controllers"
 )
 
 const envFile = ".env"
@@ -30,8 +31,12 @@ func run() (s *http.Server) {
 	}
 	port = fmt.Sprintf(":%s", port)
 
+	config.ConfigInstance.LoadConfig()
 	mux := http.NewServeMux()
+
 	mux.HandleFunc("/process", controllers.ProcessData)
+	mux.HandleFunc("/update-config", config.UpdateConfigHandler)
+	mux.HandleFunc("/get-config", config.GetConfigHandler)
 
 	s = &http.Server{
 		Addr:           port,
